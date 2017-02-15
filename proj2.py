@@ -15,8 +15,10 @@ lst= soup.find_all(class_="story-heading")
 for i in range(10):
 	if i>=len(lst): #see if there is no 10 headings
 		break
-	tmp=lst[i].find_all("a")
-	print (tmp[0].get_text())
+	if lst[i].a:
+		print (lst[i].a.text.replace("\n", " " ).strip())
+	#else:
+		#print (lst[i].contents[0].text.strip())
 #### Problem 2 ####
 print('\n*********** PROBLEM 2 ***********')
 print('Michigan Daily -- MOST READ\n')
