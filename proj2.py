@@ -56,21 +56,21 @@ print("UMSI faculty directory emails\n")
 ### Your Problem 4 solution goes here
 url = "https://www.si.umich.edu/directory?field_person_firstname_value=&field_person_lastname_value=&rid=4"
 base= "https://www.si.umich.edu"
-soup4 = BeautifulSoup(requests.get(url).text,"html.parser")
+soup4 = BeautifulSoup(requests.get(url,headers={'User-Agent': 'SI_CLASS'}).text,"html.parser")
 n=1
 while 1:
 	lst4=soup4.find_all("a",text="Contact Details")
 	for p in lst4:
 		if p.get("href",None)!=None: #have contact details
 			link=base+p.get("href",None)
-			tmp=BeautifulSoup(requests.get(link).text,"html.parser")
+			tmp=BeautifulSoup(requests.get(link,headers={'User-Agent': 'SI_CLASS'}).text,"html.parser")
 			email=tmp.find_all("a",href=re.compile("mailto"))
 			if len(email)!=0: #see if there is a email for the professor
 				print ("{} {}".format(n,email[0].get_text()))
 				n+=1
 	nextpage=soup4.find_all("a",title="Go to next page")
 	if len(nextpage)!=0: #see if there is next page
-		soup4=BeautifulSoup(requests.get(base+nextpage[0].get("href",None)).text,"html.parser")
+		soup4=BeautifulSoup(requests.get(base+nextpage[0].get("href",None),headers={'User-Agent': 'SI_CLASS'}).text,"html.parser")
 	else:
 		break	
 
